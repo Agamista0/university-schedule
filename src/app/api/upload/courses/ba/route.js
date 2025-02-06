@@ -28,8 +28,28 @@ export async function POST(request) {
             raw: false
         });
 
-        // Get center names from header row (skip first 3 columns)
-        const centerNames = sheet[0].slice(3).filter(Boolean);
+        // Get header row and find center columns
+        const headerRow = sheet[0];
+        const centerColumns = [];
+        
+        // Find all center columns and their data positions
+        for (let i = 3; i < headerRow.length; i++) {
+            const cellValue = headerRow[i];
+            if (cellValue) {
+                const centerName = cellValue.trim();
+                // Skip if the column name contains "Total"
+                if (!centerName.toLowerCase().includes('total')) {
+                    // When we find a center name, record its position and the next column (groups)
+                    centerColumns.push({
+                        name: centerName,
+                        studentCol: i,
+                        groupCol: i + 1
+                    });
+                }
+                // Skip the next column as it's for groups
+                i++;
+            }
+        }
 
         const courseEntries = [];
         
@@ -42,36 +62,41 @@ export async function POST(request) {
             const courseName = row[1];
             const courseId = row[2];
             
-            // Skip if essential data is missing
-            if (!courseLevel || !courseName || !courseId) continue;
+            // Skip if essential data is missing or if it's a total row
+            if (!courseLevel || !courseName || !courseId || 
+                courseName.toLowerCase().includes('total')) continue;
 
-          
             const centers = [];
-            let colIndex = 3; // Start after courseId column
 
-            // Process each center's data
-            for (let j = 0; j < centerNames.length; j++) {
-                const numberOfStudents = parseInt(row[colIndex] || 0);
-                const numberOfGroups = parseInt(row[colIndex + 1] || 0);
+            // Process each center using the mapped columns
+            for (const center of centerColumns) {
+                const numberOfStudents = row[center.studentCol];
+                const numberOfGroups = row[center.groupCol];
                 
-                if (numberOfStudents > 0) {
+                // Convert to numbers, defaulting to 0 if conversion fails
+                const students = parseInt(numberOfStudents) || 0;
+                const groups = parseInt(numberOfGroups) || 0;
+                
+                // Only add centers with valid data
+                if (students > 0 || groups > 0) {
                     centers.push({
-                        centerName: centerNames[j],
-                        numberOfStudents,
-                        numberOfGroups
+                        centerName: center.name,
+                        numberOfStudents: students,
+                        numberOfGroups: groups
                     });
                 }
-                
-                colIndex += 2; // Move to next center (2 columns per center)
             }
 
-            courseEntries.push({
-                courseLevel,
-                courseName,
-                courseId,
-                department,
-                centers
-            });
+            // Only add courses that have at least one valid center
+            if (centers.length > 0) {
+                courseEntries.push({
+                    courseLevel,
+                    courseName,
+                    courseId,
+                    department,
+                    centers
+                });
+            }
         }
 
         // Clear existing courses for this department
