@@ -19,6 +19,9 @@ const nextConfig = {
   },
   // Add trailing slash configuration to ensure consistent handling
   trailingSlash: false,
+  experimental: {
+    serverActions: true,
+  },
 };
 
 export default nextConfig;
