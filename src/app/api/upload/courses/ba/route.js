@@ -78,7 +78,7 @@ export async function POST(request) {
                 const groups = parseInt(numberOfGroups) || 0;
                 
                 // Only add centers with valid data
-                if (students > 0 || groups > 0) {
+                if (students > 0) {
                     centers.push({
                         centerName: center.name,
                         numberOfStudents: students,
