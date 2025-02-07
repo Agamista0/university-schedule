@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Sidebar from '../api/components/Sidebar';
+import Link from 'next/link';
 
 export default function UploadPage() {
   const [files, setFiles] = useState({
@@ -27,10 +28,28 @@ export default function UploadPage() {
       scheduleBA: 'Schedule BA',
       registerStudentBA: 'Register Student BA',
     },
-    COLLEGE: {
+    University : {
       centerGroup: 'Center and Group',
       roomsLabs: 'Rooms and Labs',
     }
+  };
+
+  const fileFormats = {
+    scheduleIT: '/formats/schedule-it-format.xlsx',
+    registerStudentIT: '/formats/register-student-it-format.xlsx',
+    scheduleBA: '/formats/schedule-ba-format.xlsx',
+    registerStudentBA: '/formats/register-student-ba-format.xlsx',
+    centerGroup: '/formats/center-group-format.xlsx',
+    roomsLabs: '/formats/rooms-labs-format.xlsx'
+  };
+
+  const formatInfoPages = {
+    scheduleIT: 'it-schedule-info',
+    registerStudentIT: 'it-student-info',
+    scheduleBA: 'ba-schedule-info',
+    registerStudentBA: 'ba-student-info',
+    centerGroup: 'center-group-info',
+    roomsLabs: 'rooms-labs-info'
   };
 
   const handleDrag = (e) => {
@@ -222,6 +241,18 @@ export default function UploadPage() {
                             'Drop file here or click to upload'
                           )}
                         </p>
+                        <div className="mt-2">
+                          <p className="text-xs text-amber-600">
+                            ⚠️ Please ensure your file follows the required format.{' '}
+                            <Link 
+                              href={`/${formatInfoPages[key]}`}
+                              target="_blank"
+                              className="text-blue-600 hover:text-blue-800 underline"
+                            >
+                              View format
+                            </Link>
+                          </p>
+                        </div>
                       </div>
                     </label>
                   </div>
