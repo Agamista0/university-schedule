@@ -4,11 +4,14 @@ import connectDB from '@/app/api/lib/db';
 import Room from '@/app/api/lib/models/Room';
 
 function determineRoomType(name) {
-    // Check if the room name contains "LAB" or matches lab pattern
-    if (name.includes('LAB') || /R\d+\(LAB\)/.test(name)) {
+    const normalized = name.toUpperCase();
+    if (/^LAB(?:[-\s]?\d+)?$/i.test(name)) {
         return 'LAB';
     }
-    // For lecture halls (مدرج) and other rooms
+    if (normalized.includes('LAB') || /R\d+\(LAB\)/i.test(name)) {
+        return 'LAB';
+    }
+
     return 'LECTURE_HALL';
 }
 
