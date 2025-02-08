@@ -58,7 +58,6 @@ export default function ITStudentInfo() {
               <ul className="list-disc list-inside space-y-3 text-gray-700">
                 <li>All section numbers must be positive integers</li>
                 <li>Section capacity must be between 20 and 40 students</li>
-                <li>Course IDs must match the official course catalog</li>
                 <li>Course levels must be between 1 and 4</li>
                 <li>Total capacity is automatically calculated (sections × capacity)</li>
               </ul>
@@ -67,7 +66,7 @@ export default function ITStudentInfo() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <a 
-              href="/formats/register-student-it-format.xlsx"
+              href="/public/formats/register-student-it-format.xlsx"
               className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
               download
             >

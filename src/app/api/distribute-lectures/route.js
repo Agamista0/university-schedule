@@ -23,7 +23,6 @@ const distributeLectures = async (schedule, registeredStudents, lectureHalls, la
     // Sort rooms by capacity
     lectureHalls.sort((a, b) => b[2] - a[2]);
     labs.sort((a, b) => b[2] - a[2]);
-    console.log(lectureHalls.length)
     const lecturesWithAttendance = [];
     for (const lecture of schedule) {
         const courseId = lecture.lecture;
@@ -67,7 +66,6 @@ const distributeLectures = async (schedule, registeredStudents, lectureHalls, la
 
 
         const availableRooms = lectureHalls.filter(hall => areSimilarNames(hall.center,center) && isRoomAvailable(bookedRooms, lectureDay, lectureTime, hall.name));
-        console.log(availableRooms)
         let roundedAttendance = Math.ceil(expectedAttendance);
         for (const hall of availableRooms) {
             if (roundedAttendance <= 0) break;
@@ -81,6 +79,8 @@ const distributeLectures = async (schedule, registeredStudents, lectureHalls, la
                     groups: lecture.groups,
                     hall: hall.name,
                     center,
+                    capacityHall: hall.capacity
+                    
                    
                 });
                 bookedRooms[`${lectureDay}-${lectureTime}`] = bookedRooms[`${lectureDay}-${lectureTime}`] || [];
@@ -96,6 +96,8 @@ const distributeLectures = async (schedule, registeredStudents, lectureHalls, la
                     groups: lecture.groups,
                     hall: hall.name,
                     center,
+                    capacityHall : hall.capacity
+
                 
                 });
                 bookedRooms[`${lectureDay}-${lectureTime}`] = bookedRooms[`${lectureDay}-${lectureTime}`] || [];
@@ -118,6 +120,7 @@ const distributeLectures = async (schedule, registeredStudents, lectureHalls, la
                         groups: lecture.groups,
                         hall: lab.name,
                         center,
+                        capacityHall : lab.capacity
                         
                     });
                     bookedRooms[`${lectureDay}-${lectureTime}`] = bookedRooms[`${lectureDay}-${lectureTime}`] || [];
@@ -133,6 +136,8 @@ const distributeLectures = async (schedule, registeredStudents, lectureHalls, la
                         groups: lecture.groups,
                         hall: lab.name,
                         center,
+                        capacityHall: lab.capacity
+
                     });
                     bookedRooms[`${lectureDay}-${lectureTime}`] = bookedRooms[`${lectureDay}-${lectureTime}`] || [];
                     bookedRooms[`${lectureDay}-${lectureTime}`].push(lab.name);
@@ -141,9 +146,9 @@ const distributeLectures = async (schedule, registeredStudents, lectureHalls, la
             }
         }
 
-        // if (roundedAttendance > 0) {
-        //     console.log(`Warning: No room available for ${roundedAttendance} students in lecture ${lecture.lecture} on ${lectureDay} at ${lectureTime}`);
-        // }
+        if (roundedAttendance > 0) {
+            console.log(`Warning: No room available for ${roundedAttendance} students in lecture ${lecture.lecture} on ${lectureDay} at ${lectureTime}`);
+        }
     }
 
     return assignments ;
@@ -199,15 +204,21 @@ export async function POST(request) {
         
         await Distributed_lectures.deleteMany({});
         // Save assignments to the database
-        await Distributed_lectures.insertMany(assignments.map(assignment => ({
-            day: assignment.day,
-            time: assignment.time,
-            lecture: assignment.lecture,
-            professor: assignment.professor,
-            groups: assignment.groups,
-            hall: assignment.hall,
-            center: assignment.center,
-        })));
+        try {
+            await Distributed_lectures.insertMany(assignments.map(assignment => ({
+                day: assignment.day,
+                time: assignment.time,
+                lecture: assignment.lecture,
+                professor: assignment.professor,
+                groups: assignment.groups,
+                hall: assignment.hall,
+                center: assignment.center,
+                capacityHall: assignment.capacityHall // Ensure this is defined correctly
+            })));
+            console.log('Assignments saved successfully');
+        } catch (error) {
+            console.error('Error saving assignments:', error);
+        }
 
         return NextResponse.json({
             message: 'Lectures distributed and saved successfully',
@@ -231,7 +242,6 @@ export async function GET(request) {
         return NextResponse.json({
             message: 'Distributed lectures fetched successfully',
             count : distributedLectures.length ,
-            data: distributedLectures,
         }, { status: 200 });
     } catch (error) {
         console.error('Error fetching distributed lectures:', error);

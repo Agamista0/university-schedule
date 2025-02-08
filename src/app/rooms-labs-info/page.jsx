@@ -96,7 +96,7 @@ const RoomsLabsInfo = () => {
           <div className="mb-8">
             <h2 className="text-xl font-semibold mb-4">Download Template</h2>
             <a 
-              href="/formats/rooms-labs-format.xlsx"
+              href="/src/app/public/formats/rooms-labs-format.xlsx"
               className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
               download
             >

@@ -30,6 +30,10 @@ const Distributed_lecturesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    capacityHall: {
+        type: Number ,
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
