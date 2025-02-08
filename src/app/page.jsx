@@ -1,146 +1,130 @@
-'use client'
-import React from 'react'
-import scheduleData from '../../public/message.json'
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 
-function Page() {
-  // Get unique days for the header
-  const uniqueDays = [...new Set(scheduleData.map(item => item.day))]
-  
-  // Get unique centers
-  const uniqueCenters = [...new Set(scheduleData.map(item => item.center))]
-
-  // Get all unique times sorted chronologically
-  const uniqueTimes = [...new Set(scheduleData.map(item => item.time))].sort((a, b) => {
-    const getTimeValue = (timeStr) => {
-      // Reuse the same time conversion logic from getLecturesForHall
-      const [start] = timeStr.split('-');
-      const time = start.padEnd(5, ':00');
-      const [hours, minutes] = time.split(':').map(Number);
-      
-      let adjustedHours = hours;
-      if (hours >= 1 && hours <= 7) adjustedHours += 12;
-      if (hours === 12) adjustedHours = 12;
-      
-      return new Date(`1970-01-01T${adjustedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`).getTime();
-    };
-    return getTimeValue(a) - getTimeValue(b);
+export default function LoginPage() {
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // Get unique halls for each center
-  const getHallsByCenter = (center) => {
-    return [...new Set(scheduleData
-      .filter(item => item.center === center)
-      .map(item => item.hall))]
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-  // Get lectures for specific hall and day
-  const getLecturesForHall = (center, hall, day) => {
-    return scheduleData.filter(item => 
-      item.center === center && 
-      item.hall === hall && 
-      item.day === day
-    ).sort((a, b) => {
-      // Convert start times to Date objects with proper AM/PM handling
-      const getTimeValue = (timeStr) => {
-        const [start] = timeStr.split('-');
-        const time = start.padEnd(5, ':00');
-        const [hours, minutes] = time.split(':').map(Number);
-        
-        // Convert to 24-hour format based on schedule context
-        let adjustedHours = hours;
-        if (hours >= 1 && hours <= 7) { // PM times
-          adjustedHours += 12;
+    console.log('Submitting credentials:', {
+        email: credentials.email,
+        password: credentials.password ? '[REDACTED]' : 'missing'
+    });
+
+    try {
+      const response = await axios.post('/api/auth/login', 
+        credentials,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
         }
-        if (hours === 12) { // Noon
-          adjustedHours = 12;
-        }
-        
-        return new Date(`1970-01-01T${adjustedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`).getTime();
-      };
-      return getTimeValue(a.time) - getTimeValue(b.time);
-    })
-  }
+      );
+
+      console.log('Response received:', response.data);
+
+      // Store token and role in localStorage
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('role', response.data.role);
+      
+      // Redirect based on role
+      if (response.data.role === 'Manager') {
+        window.location.href = '/managerdashboard';
+      } else {
+        window.location.href = '/Dashboard';
+      }
+    } catch (err) {
+      console.error('Login error:', {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status
+      });
+      setError(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value
+    });
+  };
 
   return (
-    <div className="p-6 max-w-screen-2xl mx-auto ">
-      <table className="w-full border-collapse bg-white">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border p-3 text-left">Center</th>
-            <th className="border p-3 text-left">Hall</th>
-            {uniqueDays.map(day => (
-              <th key={day} className="border p-3 text-center">
-                <div className="font-bold">{day}</div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {uniqueCenters.map((center) => (
-            getHallsByCenter(center).map((hall) => (
-              <tr key={`${center}-${hall}`}>
-                <td className="border p-3 bg-blue-50 font-semibold text-center">{center}</td>
-                <td className="border p-3 bg-green-50 text-center">
-                  <div className="font-semibold">Hall: {hall}</div>
-                  <div className="text-sm text-gray-600">
-                    Capacity: {scheduleData.find(item => 
-                      item.center === center && 
-                      item.hall === hall
-                    )?.capacity || 'N/A'}
-                  </div>
-                </td>
-                {uniqueDays.map(day => {
-                  const dayLectures = getLecturesForHall(center, hall, day);
-                  return (
-                    <td key={day} className="border p-3 min-w-[1400px]">
-                      <div className="space-x-4 flex">
-                        {uniqueTimes.map(time => {
-                          const lecture = dayLectures.find(l => l.time === time);
-                          return (
-                            <div
-                              key={time}
-                              className="p-2 bg-gray-50 rounded border flex flex-col justify-center max-w-[200px] w-[100%] max-h-[200px]"
-                            >
-                              {lecture ? (
-                                <>
-                                  <div className="text-sm font-medium text-gray-600 text-center">
-                                    {lecture.time}{' '}
-                                    {new Date(`1970-01-01T${lecture.time.split('-')[0].padEnd(5, ':00')}`)
-                                      .toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
-                                      .split(' ')[1]}
-                                  </div>
-                                  <div className="flex-1 flex flex-col justify-center text-center">
-                                    <div className="text-sm font-semibold text-blue-700 line-clamp-3">{lecture.lecture}</div>
-                                    <div className="text-xs text-gray-600">{lecture.professor}</div>
-                                    <div className="text-xs text-gray-500">
-                                      Groups: {lecture.groups.A}/{lecture.groups.B}
-                                    </div>
-                                  </div>
-                                </>
-                              ) : (
-                                <div className="flex items-center justify-center h-full min-h-[100px]">
-                                  <div className="text-sm font-medium text-gray-400">
-                                    {time}{' '}
-                                    {new Date(`1970-01-01T${time.split('-')[0].padEnd(5, ':00')}`)
-                                      .toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
-                                      .split(' ')[1]}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </td>
-                  );
-                })}
-              </tr>
-            ))
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-semibold text-blue-500 mb-2">
+            Admin Login
+          </h1>
+          <p className="text-gray-600">Login to your account</p>
+        </div>
 
-export default Page
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label 
+              htmlFor="email" 
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={credentials.email}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label 
+              htmlFor="password" 
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
