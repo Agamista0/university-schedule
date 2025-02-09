@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Add to your global CSS file */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbarWidth: none;  /* Firefox */
+  }
+
+  /* Add to your CSS file */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
