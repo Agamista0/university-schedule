@@ -1,18 +1,7 @@
 import { NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
 import connectDB from '@/app/api/lib/db';
-import Room from '@/app/api/lib/models/Room';
-
-function determineRoomType(name) {
-    const normalized = name.toUpperCase();
-    if (/^LAB(?:[-\s]?\d+)?$/i.test(name)) {
-        return 'LAB';
-    }
-    if (normalized.includes('LAB') || /R\d+\(LAB\)/i.test(name)) {
-        return 'LAB';
-    }
-    return 'LECTURE_HALL';
-}
+import Center from '@/app/api/lib/models/Center';
 
 export async function POST(request) {
     try {
@@ -37,43 +26,26 @@ export async function POST(request) {
             raw: false
         });
 
-        const roomEntries = [];
-        let currentCenter = '';
-
         // Skip header row and process data
+        const centerEntries = [];
         for (let i = 1; i < sheet.length; i++) {
             const row = sheet[i];
-            if (!row || row.length === 0) continue; // Skip empty rows
+            if (!row[0]) continue; 
 
-            // Update current center if cell in first column is not empty
-            if (row[0]) {
-                currentCenter = row[0];
-            }
-
-            // Skip rows without room name or capacity
-            if (!row[1] || !row[2]) continue;
-
-            const roomName = row[1].trim();
-            const capacity = parseInt(row[2]);
-            const possibilities = row[3] ? row[3].trim() : null;
-
-            roomEntries.push({
-                center: currentCenter,
-                name: roomName,
-                type: determineRoomType(roomName),
-                capacity: capacity,
-                possibilities: possibilities
+            centerEntries.push({
+                centerName: row[1],
+                groups: row[2]
             });
         }
 
-        // Clear existing rooms
-        await Room.deleteMany({});
+        // Clear existing centers
+        await Center.deleteMany({});
 
-        // Insert new rooms
-        const result = await Room.insertMany(roomEntries);
+        // Insert new centers
+        const result = await Center.insertMany(centerEntries);
 
         return NextResponse.json({
-            message: 'Rooms uploaded successfully',
+            message: 'Centers uploaded successfully',
             count: result.length,
             data: result
         }, { status: 201 });
@@ -81,7 +53,7 @@ export async function POST(request) {
     } catch (error) {
         console.error('Upload error:', error);
         return NextResponse.json({
-            message: 'Error uploading rooms',
+            message: 'Error uploading centers',
             error: process.env.NODE_ENV === 'development' ? error.message : undefined,
             stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
         }, { status: 500 });

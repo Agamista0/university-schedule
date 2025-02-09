@@ -35,12 +35,12 @@ export default function UploadPage() {
   };
 
   const fileFormats = {
-    scheduleIT: '/formats/schedule-it-format.xlsx',
-    registerStudentIT: '/formats/register-student-it-format.xlsx',
-    scheduleBA: '/formats/schedule-ba-format.xlsx',
-    registerStudentBA: '/formats/register-student-ba-format.xlsx',
-    centerGroup: '/formats/center-group-format.xlsx',
-    roomsLabs: '/formats/rooms-labs-format.xlsx'
+    scheduleIT: '/formats/schedule-format.xlsx',
+    registerStudentIT: '/formats/student-registration-it-format.xlsx',
+    scheduleBA: '/formats/schedule-format.xlsx',
+    registerStudentBA: '/formats/student-registration-ba-format.xlsx',
+    centerGroup: '/formats/center-group-template.xlsx',
+    roomsLabs: '/formats/room-lab-assignment-template.xlsx'
   };
 
   const formatInfoPages = {
@@ -50,6 +50,15 @@ export default function UploadPage() {
     registerStudentBA: 'ba-student-info',
     centerGroup: 'center-group-info',
     roomsLabs: 'rooms-labs-info'
+  };
+
+  const endpointMap = {
+    scheduleBA: '/api/upload/schedule/BA',
+    registerStudentBA: '/api/upload/courses/ba',
+    scheduleIT: '/api/upload/schedule/IT',
+    registerStudentIT: '/api/upload/courses/it',
+    centerGroup: '/api/upload/centers',
+    roomsLabs: '/api/upload/rooms'
   };
 
   const handleDrag = (e) => {
@@ -81,9 +90,12 @@ export default function UploadPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Check if at least one file is uploaded
-    if (Object.values(files).every(file => file === null)) {
+    const requiredFiles = Object.keys(categories[selectedCategory]);
+    const uploadedFiles = requiredFiles.filter(key => files[key] !== null);
+
+    if (uploadedFiles.length === 0) {
       setError('Please upload at least one file');
       return;
     }
@@ -92,20 +104,35 @@ export default function UploadPage() {
     setError('');
     setSuccess('');
 
-    const formData = new FormData();
-    Object.entries(files).forEach(([key, file]) => {
-      if (file) {
-        formData.append(key, file);
-      }
-    });
-
     try {
-      const response = await axios.post('/api/upload', formData, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      const uploadPromises = uploadedFiles.map(async (key) => {
+        const endpoint = endpointMap[key];
+        const formData = new FormData();
+        formData.append('file', files[key]);
+
+        const response = await axios.post(endpoint, formData, {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        });
+
+        // Validate response structure
+        if (!response.data || !response.data.message) {
+          throw new Error('Invalid server response');
         }
+
+        return response;
       });
+
+      const results = await Promise.allSettled(uploadPromises);
+      
+      // Check for any failed uploads
+      const failedUploads = results.filter(result => result.status === 'rejected');
+      if (failedUploads.length > 0) {
+        const errorMessages = failedUploads.map(f => f.reason?.message || 'Unknown error');
+        throw new Error(`Some files failed to upload: ${errorMessages.join(', ')}`);
+      }
 
       setSuccess('Files uploaded successfully!');
       setFiles({
@@ -118,7 +145,11 @@ export default function UploadPage() {
       });
       e.target.reset();
     } catch (err) {
-      setError(err.response?.data?.message || 'Upload failed');
+      const errorMessage = err.response?.data?.error?.details || 
+                          err.response?.data?.message || 
+                          err.message || 
+                          'Upload failed';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
