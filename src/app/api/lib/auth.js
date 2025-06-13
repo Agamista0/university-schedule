@@ -1,26 +1,46 @@
 import jwt from 'jsonwebtoken';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export async function verifyAuth(request) {
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get('token');
+    // 1. Try Authorization header first (preferred for SPA/API calls)
+    const incomingHeaders = headers();
+    const authHeader = incomingHeaders.get('authorization');
 
-    if (!token) {
+    let rawToken;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      rawToken = authHeader.substring(7);
+    }
+
+    // 2. Fallback to httpOnly cookie for browser navigations
+    if (!rawToken) {
+      const cookieStore = cookies();
+      const cookieToken = cookieStore.get('token');
+      if (cookieToken) rawToken = cookieToken.value;
+    }
+
+    if (!rawToken) {
       return null;
     }
 
-    const decoded = jwt.verify(token.value, process.env.JWT_SECRET);
-    return decoded;
+    return decodeToken(rawToken);
   } catch (error) {
     console.error('Auth verification error:', error);
     return null;
   }
 }
 
-export function generateToken(user) {
+export function decodeToken(token) {
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    return null;
+  }
+}
+
+export function generateToken(role , username) {
   return jwt.sign(
-    { _id: user._id, role: user.role },
+    { role: role, username: username },
     process.env.JWT_SECRET,
     { expiresIn: '3h' }
   );

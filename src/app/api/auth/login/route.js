@@ -1,81 +1,98 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/app/api/lib/db';
-import User from '@/app/api/lib/models/User';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+
+import connectDB from '../../lib/db';
+import User from '../../lib/models/User';
+import { generateToken } from '../../lib/auth';
 
 export async function POST(request) {
   try {
-    await connectDB();
-    
-    // Add debugging to check all users in the database
-    const allUsers = await User.find({});
-    console.log('All users in database:', allUsers.map(user => ({
-      email: user.email,
-      role: user.role,
-      _id: user._id
-    })));
-    
-    const { email, password } = await request.json();
-    console.log('Login attempt for email:', email);
+    const { username, password } = await request.json();
 
-    if (!email || !password) {
-      console.log('Missing credentials');
-      return NextResponse.json({ 
-        message: 'Email and password are required' 
-      }, { status: 400 });
+    if (!username || !password) {
+      return NextResponse.json(
+        { message: 'username and password are required' },
+        { status: 400 }
+      );
     }
 
-    const user = await User.findOne({ email: email.toLowerCase().trim() });
-    console.log('Database query result:', {
-      emailSearched: email.toLowerCase().trim(),
-      userFound: !!user,
-      userEmail: user?.email,
-      userRole: user?.role
+    let userType;
+    if (username.length === 7) {
+      userType = '2'; // regular student
+    } else {
+      userType = '1'; // admin credential type for remote API
+    }
+
+    // Form data for university login (same for everyone)
+    const form = new URLSearchParams({
+      UserName: username,
+      Password: password,
+      sysID: '313',
+      UserLang: 'E',
+      userType: userType,
     });
 
+    // Attempt remote authentication
+    let remoteOk = false;
+    try {
+      const uniRes = await fetch('https://sis.eelu.edu.eg/studentLogin', {
+        method: 'POST',
+        body: form,
+      });
+      const uniData = await uniRes.json();
+      remoteOk = uniData?.rows?.[0]?.row?.LoginOK === 'True';
+    } catch (err) {
+      console.error('University login error: ', err);
+      return NextResponse.json(
+        { message: 'Unable to reach university login service' },
+        { status: 502 }
+      );
+    }
+
+    if (!remoteOk) {
+      return NextResponse.json(
+        { message: 'Invalid username or password' },
+        { status: 401 }
+      );
+    }
+
+    // Decide role based on local DB record
+    await connectDB();
+    let user = await User.findOne({ username });
+
+    let role;
     if (!user) {
-      console.log('User not found');
-      return NextResponse.json({ 
-        message: 'Invalid credentials' 
-      }, { status: 400 });
+      role = 'user';
+    } else {
+      role = user.role;
     }
+    
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      console.log('Password mismatch');
-      return NextResponse.json({ 
-        message: 'Invalid credentials' 
-      }, { status: 400 });
-    }
+    // Issue JWT
+    const token = generateToken(role, username);
 
-    const token = jwt.sign(
-      { _id: user._id, role: user.role }, 
-      process.env.JWT_SECRET,
-      { expiresIn: '3h' }
+    const response = NextResponse.json(
+      { message: 'Login successful', role, token },
+      { status: 200 }
     );
 
-    const response = NextResponse.json({
-      token: token,
-      role: user.role
-    }, { status: 200 });
-
-    // Set cookie
     response.cookies.set('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',
-      maxAge: 60 * 60 * 3 // 3 hours
+      maxAge: 60 * 60 * 3,
     });
 
     return response;
-
   } catch (error) {
     console.error('Login error:', error);
-    return NextResponse.json({ 
-      message: 'Server error', 
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        message: 'Server error during login',
+        details:
+          process.env.NODE_ENV === 'development' ? error.message : undefined,
+      },
+      { status: 500 }
+    );
   }
 }
