@@ -8,10 +8,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { AccordionHeader } from "@radix-ui/react-accordion";
 import ScheduleTable from "@/components/ScheduleTable";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import message from "./message.json";
 
 function Page() {
   const scrollContainerRef = React.useRef(null);
@@ -22,15 +22,15 @@ function Page() {
   React.useEffect(() => {
     const fetchLectures = async () => {
       try {
-        const response = await axios.get("/api/distribute-lectures");
-        setScheduleFetchedData(response.data.data);
+        // const response = await axios.get("/api/distribute-lectures");
+        setScheduleFetchedData(message);
       } catch (error) {
         console.error("Error fetching lectures:", error);
       }
     };
 
     fetchLectures();
-  }, []); // Runs only once when the component mounts
+  }, []);
 
   // Add at the top with other state declarations
   const [scrollX, setScrollX] = React.useState(0);

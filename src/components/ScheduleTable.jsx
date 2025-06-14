@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, SearchCheck, SearchIcon } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "./ui/button";
-import axios from "axios";
 
 const ScheduleTable = ({ scheduleData }) => {
   const tableRef = React.useRef(null);
@@ -13,6 +12,8 @@ const ScheduleTable = ({ scheduleData }) => {
   const [scrollLeft, setScrollLeft] = React.useState(0);
   const [isFullscreen, setIsFullscreen] = React.useState(false);
   const containerRef = React.useRef(null);
+
+  console.log(scheduleData);
 
   // Add fullscreen toggle handler
   const toggleFullscreen = () => {
@@ -80,6 +81,9 @@ const ScheduleTable = ({ scheduleData }) => {
     "3:00-4:00",
     "4:00-5:00",
   ];
+  const uniqueColors = [...new Set(scheduleData.map((item) => item.color))];
+
+  console.log(uniqueColors);
 
   const getHallsByCenter = (center) => {
     const halls = [
@@ -232,57 +236,103 @@ const ScheduleTable = ({ scheduleData }) => {
         } 
           ${!isFullscreen ? "ml-[70px] mx-6" : ""} scrollbar-hide`}
       >
-        <button
-          onClick={toggleFullscreen}
-          className="fixed right-4 top-4 bg-gray-800 hover:bg-gray-700 text-white px-3 py-1 rounded shadow-md z-50 transition-colors text-sm flex items-center gap-1"
-        >
-          {isFullscreen ? (
-            <>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"
+        {/* Filters - Appear only on non fullscreen */}
+        {!isFullscreen && (
+          <>
+            <div className="flex w-full mb-4 justify-start p-4 items-center gap-4 align-middle h-[60px] bg-white border rounded">
+              {/* Search */}
+              <div>
+                <input
+                  type="text"
+                  placeholder="Search Lectures"
+                  className="border border-gray-300 rounded px-2 py-1"
+                  onChange={() => {}}
                 />
-              </svg>
-            </>
-          ) : (
-            <>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
-                />
-              </svg>
-            </>
-          )}
-        </button>
+              </div>
+              <div className="flex gap-2">
+                <select
+                  name="center"
+                  id="center"
+                  placeholder="Select Center"
+                  className="border border-gray-300 rounded px-2 py-1"
+                >
+                  <option value="Select Center">Select Center</option>
+                  {uniqueCenters.map((center, index) => (
+                    <option key={index} value={center}>
+                      {center}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  name="department"
+                  id="department"
+                  placeholder="Select Department"
+                  className="border border-gray-300 rounded px-2 py-1"
+                >
+                  <option value="Select Department">Select Department</option>
+                  <option value="it">IT</option>
+                  <option value="business">Business</option>
+                </select>
+                <button className="border hover:bg-gray-700 hover:text-white px-3 py-1 rounded z-50 transition-colors text-sm flex items-center gap-1">
+                  <SearchIcon className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={toggleFullscreen}
+                  className="border hover:bg-gray-700 hover:text-white px-3 py-1 rounded z-50 transition-colors text-sm flex items-center gap-1"
+                >
+                  {isFullscreen ? (
+                    <>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5 5.25 5.25"
+                        />
+                      </svg>
+                      Exit Fullscreen
+                    </>
+                  ) : (
+                    <>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+                        />
+                      </svg>
+                      Enter Fullscreen
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </>
+        )}
         {/* Fixed Header */}
         <div className="sticky top-0 z-30 bg-white">
-          <div className="flex">
+          <div className="flex h-[60px]">
             {/* Left Header */}
             <div className="sticky left-0 z-30 w-64">
-              <table className="border-collapse w-full">
+              <table className="border-collapse w-full h-full ">
                 <thead>
                   <tr>
                     <th
                       rowSpan={2}
-                      className="border px-6 text-center bg-gray-100 font-semibold text-gray-700 h-[62px]"
+                      className="border px-6 text-center bg-gray-100 font-semibold text-gray-700"
                     >
                       Center
                     </th>
@@ -300,29 +350,37 @@ const ScheduleTable = ({ scheduleData }) => {
             {/* Days/Times Header */}
             <div
               ref={headerRef}
-              className="overflow-hidden flex-1 scrollbar-hide"
+              className="overflow-hidden flex-1 w-52 scrollbar-hide h-full"
             >
-              <table className="border-collapse w-full">
-                <thead>
-                  <tr>
+              <table className="border-collapse w-full h-full">
+                <thead className="h-full">
+                  {/* Days Header */}
+                  <tr className="h-full">
                     {uniqueDays.map((day) => (
                       <th
                         key={day}
                         colSpan={uniqueTimes.length}
-                        className="border py-2 text-center bg-gray-100"
+                        className="bg-white"
                       >
-                        <div className="font-bold text-sm">{day}</div>
+                        <div className="h-full  font-normal text-center text-sm bg-gray-100 border rounded-lg">
+                          <div className="flex items-center justify-center h-full align-middle">
+                            {day}
+                          </div>
+                        </div>
                       </th>
                     ))}
                   </tr>
+                  {/* Times Header */}
                   <tr>
                     {uniqueDays.map((day) =>
                       uniqueTimes.map((time) => (
                         <th
                           key={`${day}-${time}`}
-                          className="border py-1 text-center whitespace-nowrap bg-gray-50"
+                          className="text-center whitespace-nowrap"
                         >
-                          <div className="text-xs font-medium w-28">{time}</div>
+                          <div className="text-xs w-52 h-[23px] font-medium text-gray-500 flex items-center justify-center">
+                            {time}
+                          </div>
                         </th>
                       ))
                     )}
@@ -332,18 +390,17 @@ const ScheduleTable = ({ scheduleData }) => {
             </div>
           </div>
         </div>
-
         {/* Scrollable Content */}
         <div
-          className="flex overflow-auto scrollbar-hide"
+          className="flex overflow-auto scrollbar-hide h-full"
           style={{ height: "calc(100vh - 16rem)" }}
         >
           {/* Left Column Content */}
           <div
             ref={leftPanelRef}
-            className="sticky left-0 w-64 bg-white z-20 overflow-auto scrollbar-hide"
+            className="sticky left-0 w-64 bg-white z-20 overflow-auto scrollbar-hide h-full"
           >
-            <table className="border-collapse w-full">
+            <table className="border-collapse w-full h-full">
               <tbody>
                 {uniqueCenters.map((center, centerIndex) => {
                   const centerHalls = getHallsByCenter(center);
@@ -358,42 +415,45 @@ const ScheduleTable = ({ scheduleData }) => {
                   }
                   return centerHalls.map((hall, hallIndex) => (
                     <tr key={`${center}-${hall}`}>
+                      {/* CENTER COLUMN */}
                       {hallIndex === 0 && (
                         <td
                           rowSpan={centerHalls.length}
-                          className={`border-r font-medium  text-center text-gray-900 
+                          className={`border-r font-medium text-center text-gray-900 
                             ${
                               centerColorClasses[
                                 centerIndex % centerColorClasses.length
                               ]
                             }`}
                         >
-                          <div className="h-28 w-[137px] flex flex-col items-center justify-center p-4">
+                          <div className="h-28 w-[137px] flex flex-col items-center justify-center">
                             <span className="text-base">{center}</span>
                             <span className="text-xs text-gray-500 mt-1">
                               {centerHalls.length}{" "}
-                              {centerHalls.length === 1 ? "Hall" : "Halls"}
+                              {centerHalls.length > 1 ? "Halls" : "Hall"}
                             </span>
                           </div>
                         </td>
                       )}
+                      {/* HALL COLUMN */}
                       <td
                         className={`border text-center ${
                           hallColorClasses[hallIndex % hallColorClasses.length]
                         }`}
                       >
-                        <div className="h-28 w-[114px] flex flex-col items-center justify-center p-4">
+                        <div className="h-28 w-[114px] flex flex-col items-center justify-center">
                           <span className="font-medium text-gray-900 ">
                             {hall}
                           </span>
-                          <div className="flex items-center gap-1 mt-2">
-                            {/* <svg
+                          {/* HALL CAPACITY COMMENTED */}
+                          {/* <div className="flex items-center gap-1 mt-2">
+                            <svg
                               className="h-4 w-4 text-gray-500"
                               viewBox="0 0 20 20"
                               fill="currentColor"
                             >
                               <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                            </svg> */}
+                            </svg>
                             <span className="text-xs text-gray-600">
                               Capacity:{" "}
                               {scheduleData.find(
@@ -401,7 +461,7 @@ const ScheduleTable = ({ scheduleData }) => {
                                   item.center === center && item.hall === hall
                               )?.capacityHall || "N/A"}
                             </span>
-                          </div>
+                          </div> */}
                         </div>
                       </td>
                     </tr>
@@ -435,15 +495,25 @@ const ScheduleTable = ({ scheduleData }) => {
                             day,
                             time
                           );
+
                           return (
                             <td
                               key={`${day}-${time}`}
-                              className="border text-center whitespace-nowrap"
+                              className="whitespace-nowrap"
                             >
-                              <div className="h-28 w-28 p-1 font-medium bg-gray-50 hover:bg-gray-100 transition flex flex-col justify-center">
+                              <div
+                                className={`h-28 w-52 rounded border-[1px] p-2 transition flex flex-col justify-center`}
+                                style={
+                                  lecture
+                                    ? { backgroundColor: lecture.color }
+                                    : { backgroundColor: "white" }
+                                }
+                              >
                                 {lecture ? (
-                                  <div className="flex-1 flex flex-col justify-center text-center">
-                                    <div className="text-xs font-semibold text-blue-700 line-clamp-2 px-1">
+                                  <div className="flex-1 flex flex-col ">
+                                    <div
+                                      className={`text-xs text-wrap w-full font-semibold text-black line-clamp-2`}
+                                    >
                                       {lecture.lecture}
                                     </div>
                                     <div className="text-[10px] text-gray-600">
@@ -461,8 +531,8 @@ const ScheduleTable = ({ scheduleData }) => {
                                     </div>
                                   </div>
                                 ) : (
-                                  <div className="text-xs text-gray-400 text-center">
-                                    No lecture
+                                  <div className="text-xs text-gray-400 text-center h-full flex items-center justify-center">
+                                    Available
                                   </div>
                                 )}
                               </div>

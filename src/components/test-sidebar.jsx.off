@@ -42,7 +42,7 @@ const sidebarLinks = [
   },
 ];
 
-const Sidebar = ({ activeLink }) => {
+const Sidebar = () => {
   const pathname = usePathname();
 
   // Utility to check if link is active
@@ -65,7 +65,6 @@ const Sidebar = ({ activeLink }) => {
       {/* Main Navigation */}
       <div className="flex-1 p-4">
         <div className="space-y-2">
-          {/* File Upload - Active State */}
           {sidebarLinks.map((link) => {
             const Icon = link.icon;
             const active = isActive(link.href);
@@ -89,34 +88,34 @@ const Sidebar = ({ activeLink }) => {
               </Link>
             );
           })}
-        </div>
-      </div>
 
-      {/* Bottom Navigation */}
-      <div className="p-4 border-t border-gray-100">
-        <div className="space-y-2">
-          {/* Profile */}
-          <div className="text-gray-600 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-gray-50 transition-colors">
-            <User className="w-5 h-5" />
-            <span className="font-medium">Profile</span>
-          </div>
+          {/* Bottom Navigation */}
+          <div className="p-4 border-t border-gray-100">
+            <div className="space-y-2">
+              {/* Profile */}
+              <div className="text-gray-600 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-gray-50 transition-colors">
+                <User className="w-5 h-5" />
+                <span className="font-medium">Profile</span>
+              </div>
 
-          {/* Settings */}
-          <div className="text-gray-600 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-gray-50 transition-colors">
-            <Settings className="w-5 h-5" />
-            <span className="font-medium">Settings</span>
-          </div>
+              {/* Settings */}
+              <div className="text-gray-600 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-gray-50 transition-colors">
+                <Settings className="w-5 h-5" />
+                <span className="font-medium">Settings</span>
+              </div>
 
-          {/* Help */}
-          <div className="text-gray-600 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-gray-50 transition-colors">
-            <HelpCircle className="w-5 h-5" />
-            <span className="font-medium">Help</span>
-          </div>
+              {/* Help */}
+              <div className="text-gray-600 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-gray-50 transition-colors">
+                <HelpCircle className="w-5 h-5" />
+                <span className="font-medium">Help</span>
+              </div>
 
-          {/* Logout */}
-          <div className="text-red-500 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-red-50 transition-colors">
-            <LogOut className="w-5 h-5" />
-            <span className="font-medium">Logout</span>
+              {/* Logout */}
+              <div className="text-red-500 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-red-50 transition-colors">
+                <LogOut className="w-5 h-5" />
+                <span className="font-medium">Logout</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
