@@ -1,0 +1,1010 @@
+[
+  {
+  "day": "Saturday",
+  "time": "08:00 : 09:00",
+  "lecture": "Information Computer Networks Security",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "08:00 : 09:00",
+  "lecture": "Ethical Hacking-lab",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "09:00 : 10:00",
+  "lecture": "Microcontroller",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "09:00 : 10:00",
+  "lecture": "Ethical Hacking-lab",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "10:00 : 11:00",
+  "lecture": "Microcontroller",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "10:00 : 11:00",
+  "lecture": "Probability and Statistics-1",
+  "professor": "Eng. Khalifa",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Room 3",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "10:00 : 11:00",
+  "lecture": "Selected labs in Al",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "11:00 : 12:00",
+  "lecture": "Logic Design",
+  "professor": "Eng. Khalifa",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Room 3",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "11:00 : 12:00",
+  "lecture": "Logic Design",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "11:00 : 12:00",
+  "lecture": "Selected labs in Al",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "12:00 : 01:00",
+  "lecture": "Mathematics-2",
+  "professor": "Eng. Khalifa",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Room 3",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "12:00 : 01:00",
+  "lecture": "Mathematics-2",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Room 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "12:00 : 01:00",
+  "lecture": "Cloud Computing Networking",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "01:00 : 02:00",
+  "lecture": "Machine Learning",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "01:00 : 02:00",
+  "lecture": "Logic Design",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Room 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "01:00 : 02:00",
+  "lecture": "Mathematics-2",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Room 4",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "01:00 : 02:00",
+  "lecture": "Introduction to Operation Research",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "02:00 : 03:00",
+  "lecture": "Introduction to Operation Research",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Saturday",
+  "time": "02:00 : 03:00",
+  "lecture": "Machine Learning",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "09:00 : 10:00",
+  "lecture": "Cloud Computing Networking",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "09:00 : 10:00",
+  "lecture": "Computer Networks (1)",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "VCR": "S01"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "10:00 : 11:00",
+  "lecture": "Wireless and Mobile Networks",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "10:00 : 11:00",
+  "lecture": "Programming Languages",
+  "professor": "Eng. Al-Banna",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "11:00 : 12:00",
+  "lecture": "Information Computer Networks Security",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Room 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "11:00 : 12:00",
+  "lecture": "Ethical Hacking-lab",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "12:00 : 01:00",
+  "lecture": "Data Structure",
+  "professor": "Eng. M. Attia",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "12:00 : 01:00",
+  "lecture": "Ethical Hacking-lab",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "802": ""
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "01:00 : 02:00",
+  "lecture": "Advanced Software Engineering",
+  "professor": "Eng. M. Attia",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "01:00 : 02:00",
+  "lecture": "Web Technology",
+  "professor": "Eng. Omneya",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "02:00 : 03:00",
+  "lecture": "Web Technology",
+  "professor": "Eng. Omneya",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "02:00 : 03:00",
+  "lecture": "Data Structure",
+  "professor": "Eng. M. Attia",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "03:00 : 04:00",
+  "lecture": "Networking Fundamentals lab",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "04:00 : 05:00",
+  "lecture": "Networking Fundamentals lab",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "04:00 : 05:00",
+  "lecture": "Programming Languages",
+  "professor": "Eng. Al-Banna",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Sunday",
+  "time": "04:00 : 05:00",
+  "lecture": "Logic Design",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Room 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "08:00 : 09:00",
+  "lecture": "Pattern Recognition",
+  "professor": "Eng. Al-Banna",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "08:00 : 09:00",
+  "lecture": "Natural Languages Processing",
+  "professor": "Eng. M. Attia",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "09:00 : 10:00",
+  "lecture": "Advanced Software Engineering",
+  "professor": "Eng. M. Attia",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "09:00 : 10:00",
+  "lecture": "Pattern Recognition",
+  "professor": "Eng. Al-Banna",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "10:00 : 11:00",
+  "lecture": "Natural Languages Processing",
+  "professor": "Eng. M. Attia",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "10:00 : 11:00",
+  "lecture": "Programming Languages",
+  "professor": "Eng. Al-Banna",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "11:00 : 12:00",
+  "lecture": "Semantic Web and Ontology",
+  "professor": "Eng. Omneya",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "11:00 : 12:00",
+  "lecture": "Networking Fundamentals lab",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "11:00 : 12:00",
+  "lecture": "Probability and Statistics-1",
+  "professor": "Eng. Khalifa",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Room 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "12:00 : 01:00",
+  "lecture": "Wireless and Mobile Networks",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Room 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "12:00 : 01:00",
+  "lecture": "Selected labs in Al",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "12:00 : 01:00",
+  "lecture": "Mathematics-2",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Room 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "01:00 : 02:00",
+  "lecture": "Web Technology",
+  "professor": "Eng. Omneya",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "01:00 : 02:00",
+  "lecture": "Data Structure",
+  "professor": "Eng. M. Attia",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "01:00 : 02:00",
+  "lecture": "Mathematics-2",
+  "professor": "Eng. Khalifa",
+  "groups": {
+    "Sec": "6"
+  },
+  "hall": "Room 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "01:00 : 02:00",
+  "lecture": "Networking Fundamentals lab",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "02:00 : 03:00",
+  "lecture": "Introduction to Operation Research",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "02:00 : 03:00",
+  "lecture": "Advanced Software Engineering",
+  "professor": "Eng. M. Attia",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "02:00 : 03:00",
+  "lecture": "Probability and Statistics-1",
+  "professor": "Eng. Khalifa",
+  "groups": {
+    "Sec": "6"
+  },
+  "hall": "Room 4",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "03:00 : 04:00",
+  "lecture": "Microcontroller",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Monday",
+  "time": "04:00 : 05:00",
+  "lecture": "Microcontroller",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Tuesday",
+  "time": "08:00 : 09:00",
+  "lecture": "Natural Languages Processing",
+  "professor": "Eng. M. Attia",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Tuesday",
+  "time": "09:00 : 10:00",
+  "lecture": "Microcontroller",
+  "professor": "Eng. Amr",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Tuesday",
+  "time": "11:00 : 12:00",
+  "lecture": "Probability and Statistics-1",
+  "professor": "Eng. Khalifa",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Room 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Tuesday",
+  "time": "12:00 : 01:00",
+  "lecture": "Selected labs in Al",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "1"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Tuesday",
+  "time": "01:00 : 02:00",
+  "lecture": "Introduction to Operation Research",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Tuesday",
+  "time": "03:00 : 04:00",
+  "lecture": "Probability and Statistics-1",
+  "professor": "Eng. Khalifa",
+  "groups": {
+    "Sec": "8"
+  },
+  "hall": "Room 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Tuesday",
+  "time": "04:00 : 05:00",
+  "lecture": "Selected labs in Al",
+  "professor": "Eng. Sama",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "09:00 : 10:00",
+  "lecture": "Cloud Computing Networking",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "10:00 : 11:00",
+  "lecture": "Logic Design",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "9"
+  },
+  "hall": "Room 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "10:00 : 11:00",
+  "lecture": "Semantic Web and Ontology",
+  "professor": "Eng. Omneya",
+  "groups": {
+    "Sec": "2"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "11:00 : 12:00",
+  "lecture": "Ethical Hacking-lab",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "12:00 : 01:00",
+  "lecture": "Ethical Hacking-lab",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "01:00 : 02:00",
+  "lecture": "Information Computer Networks Security",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Room 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "01:00 : 02:00",
+  "lecture": "Advanced Software Engineering",
+  "professor": "Eng. Omneya",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "02:00 : 03:00",
+  "lecture": "Networking Fundamentals lab",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "02:00 : 03:00",
+  "lecture": "Networking Fundamentals lab",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "02:00 : 03:00",
+  "lecture": "Ethical Hacking-lab",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "03:00 : 04:00",
+  "lecture": "Networking Fundamentals lab",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "03:00 : 04:00",
+  "lecture": "Networking Fundamentals",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "03:00 : 04:00",
+  "lecture": "Ethical Hacking-lab",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Wednesday",
+  "time": "08:00 : 09:00",
+  "lecture": "Data Structure",
+  "professor": "Eng. Al-Banna",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Thursday",
+  "time": "08:00 : 09:00",
+  "lecture": "Machine Learning",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Thursday",
+  "time": "08:00 : 09:00",
+  "lecture": "Information Computer Networks Security",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Room 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Thursday",
+  "time": "09:00 : 10:00",
+  "lecture": "Machine Learning",
+  "professor": "Eng. Marihan",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Thursday",
+  "time": "09:00 : 10:00",
+  "lecture": "Web Technology",
+  "professor": "Eng. Omneya",
+  "groups": {
+    "Sec": "4"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Thursday",
+  "time": "10:00 : 11:00",
+  "lecture": "Programming Languages",
+  "professor": "Eng. Al-Banna",
+  "groups": {
+    "Sec": "5"
+  },
+  "hall": "Lab 1",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Thursday",
+  "time": "10:00 : 11:00",
+  "lecture": "Ethical Hacking-lab",
+  "professor": "Eng. Amany",
+  "groups": {
+    "Sec": "3"
+  },
+  "hall": "Lab 2",
+  "center": "Ain Shams",
+  "type": "section"
+},
+{
+  "day": "Thursday",
+  "time": "11:00 : 12:00",
+  "lecture": "Logic Design",
+  "professor": "Eng. M. Kamal",
+  "groups": {
+    "Sec": "8"
+  },
+  "hall": "Room 1",
+  "center": "Ain Shams",
+  "type": "section"
+}
+]
