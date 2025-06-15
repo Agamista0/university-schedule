@@ -15,7 +15,6 @@ const sectionSchema = new mongoose.Schema({
     },
     professor: {
         type: String,
-        required: true
     },
     groups: {
         type: Object,
@@ -29,6 +28,14 @@ const sectionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    color: {
+        type: String,
+    },
+    department: {
+        type: String,
+        required: true ,
+        default: 'IT'
+    }
 }, {
     timestamps: true
 });

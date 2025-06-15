@@ -63,7 +63,7 @@ export default function UploadCategorySelector() {
                 <span className="text-gray-400">File Upload</span>
               </div>
               <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">A</span>
+                <span className="text-white text-sm font-medium">Y</span>
               </div>
             </div>
           </div>

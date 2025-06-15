@@ -11,14 +11,14 @@ export async function POST(request) {
     try {
         await connectDB();
         
-        // Check if there are any distributed lectures
-        const distributedLectures = await Distributed_lectures.find({});
-        if (!distributedLectures || distributedLectures.length === 0) {
-            return NextResponse.json({
-                message: 'No distributed lectures found. Please distribute lectures first.',
-                error: 'No distributed lectures available'
-            }, { status: 400 });
-        }
+        // // Check if there are any distributed lectures
+        // const distributedLectures = await Distributed_lectures.find({});
+        // if (!distributedLectures || distributedLectures.length === 0) {
+        //     return NextResponse.json({
+        //         message: 'No distributed lectures found. Please distribute lectures first.',
+        //         error: 'No distributed lectures available'
+        //     }, { status: 400 });
+        // }
 
         const filePath = path.join(process.cwd(), 'src/app/public/formats/test.json');
         const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -42,7 +42,7 @@ export async function POST(request) {
     }
 }
 
-export async function GET() {
+export async function GET(request) {
     try {
         await connectDB();
          // Parse query parameters
