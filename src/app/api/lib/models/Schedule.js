@@ -21,12 +21,10 @@ const scheduleSchema = new mongoose.Schema({
     },
     professor: { 
         type: String,
-        required: true
     },
     groups: {
         type: Map,
         of: String,
-        required: true,
     },
     createdAt: { 
         type: Date, 

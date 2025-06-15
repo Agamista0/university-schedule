@@ -15,12 +15,10 @@ const Distributed_lecturesSchema = new mongoose.Schema({
     },
     professor: {
         type: String,
-        required: true
     },
     groups: {
         type: Map,
         of: String,
-        required: true
     },
     hall: {
         type: String,
@@ -30,9 +28,11 @@ const Distributed_lecturesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    capacityHall: {
-        type: Number,
-        required: true
+    department: {
+        type: String,
+    },
+    color: {
+        type: String,
     },
     createdAt: {
         type: Date,
