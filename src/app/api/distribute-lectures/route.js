@@ -55,13 +55,13 @@ export async function GET(request) {
         await connectDB();
          // Parse query parameters
          const { searchParams } = new URL(request.url);
-         const section = searchParams.get('section');
+         const lecture = searchParams.get('lecture');
          const center = searchParams.get('center');
          const department = searchParams.get('department');
  
          // Build filter object
          const filter = {};
-         if (section) filter.section = { $regex: section, $options: 'i' };
+         if (lecture) filter.lecture = { $regex: lecture , $options: 'i' };
          if (center) filter.center = center;
          if (department) filter.department = department;
  
