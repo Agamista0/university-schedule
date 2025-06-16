@@ -31,7 +31,7 @@ function Page({ type, fetchedData }) {
     };
 
     fetchLectures();
-  }, []);
+  }, [fetchedData]);
 
   // Add at the top with other state declarations
   const [scrollX, setScrollX] = React.useState(0);

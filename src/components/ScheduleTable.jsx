@@ -3,7 +3,7 @@ import { AlertCircle, SearchCheck, SearchIcon } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "./ui/button";
 
-const ScheduleTable = ({ scheduleData }) => {
+const ScheduleTable = ({ scheduleData, type }) => {
   const tableRef = React.useRef(null);
   const headerRef = React.useRef(null);
   const leftPanelRef = React.useRef(null);
@@ -239,7 +239,7 @@ const ScheduleTable = ({ scheduleData }) => {
         {/* Filters - Appear only on non fullscreen */}
         {!isFullscreen && (
           <>
-            <div className="flex w-full mb-4 justify-start p-4 items-center gap-4 align-middle h-[60px] bg-white border rounded">
+            <div className="flex w-full mb-8 justify-start p-4 items-center gap-4 align-middle h-[60px] bg-white border rounded">
               {/* Search */}
               <div>
                 <input
@@ -254,7 +254,7 @@ const ScheduleTable = ({ scheduleData }) => {
                   name="center"
                   id="center"
                   placeholder="Select Center"
-                  className="border border-gray-300 rounded px-2 py-1"
+                  className="w-[200px] border border-gray-300 rounded px-2 py-1"
                 >
                   <option value="Select Center">Select Center</option>
                   {uniqueCenters.map((center, index) => (
@@ -267,7 +267,7 @@ const ScheduleTable = ({ scheduleData }) => {
                   name="department"
                   id="department"
                   placeholder="Select Department"
-                  className="border border-gray-300 rounded px-2 py-1"
+                  className="w-[200px] border border-gray-300 rounded px-2 py-1"
                 >
                   <option value="Select Department">Select Department</option>
                   <option value="it">IT</option>
@@ -520,13 +520,27 @@ const ScheduleTable = ({ scheduleData }) => {
                                       {lecture.professor}
                                     </div>
                                     <div className="text-[10px] text-gray-500">
-                                      {Object.entries(lecture.groups).map(
-                                        ([group, mode], index) => (
-                                          <span key={group}>
-                                            {index > 0 && <br />}
-                                            Group {group}: {mode}
-                                          </span>
-                                        )
+                                      {type === "section" ? (
+                                        <div>
+                                          {Object.entries(
+                                            lecture.groups || {}
+                                          ).map(([group, mode]) => (
+                                            <span key={group}>
+                                              {group}: {mode}
+                                            </span>
+                                          ))}
+                                        </div>
+                                      ) : (
+                                        <div>
+                                          {Object.entries(lecture.groups).map(
+                                            ([group, mode], index) => (
+                                              <span key={group}>
+                                                {index > 0 && <br />}
+                                                Group {group}: {mode}
+                                              </span>
+                                            )
+                                          )}
+                                        </div>
                                       )}
                                     </div>
                                   </div>
