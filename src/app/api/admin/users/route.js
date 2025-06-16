@@ -74,10 +74,7 @@ export async function PUT(request) {
     await connectDB();
     const user = await User.findOne({ username: originalUsername });
     if (!user) {
-      return NextResponse.json(
-        { message: "User not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
     // If username is changed, check for duplicates
     if (username && username !== originalUsername) {
@@ -94,7 +91,10 @@ export async function PUT(request) {
     if (role !== undefined) user.role = role;
     await user.save();
     return NextResponse.json(
-      { message: "User updated", user: { username: user.username, name: user.name, role: user.role } },
+      {
+        message: "User updated",
+        user: { username: user.username, name: user.name, role: user.role },
+      },
       { status: 200 }
     );
   } catch (error) {
@@ -102,7 +102,6 @@ export async function PUT(request) {
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }
-
 
 // DELETE /api/admin/users  => delete user by username (body or query param)
 export async function DELETE(request) {

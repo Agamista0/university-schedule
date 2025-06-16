@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import message from "./message.json";
 
-function Page() {
+function Page({ type, fetchedData }) {
   const scrollContainerRef = React.useRef(null);
   const containerRef = React.useRef(null);
   const [isFullscreen, setIsFullscreen] = React.useState(false);
@@ -22,8 +22,9 @@ function Page() {
   React.useEffect(() => {
     const fetchLectures = async () => {
       try {
-        // const response = await axios.get("/api/distribute-lectures");
-        setScheduleFetchedData(message);
+        if (fetchedData) {
+          setScheduleFetchedData(fetchedData);
+        }
       } catch (error) {
         console.error("Error fetching lectures:", error);
       }

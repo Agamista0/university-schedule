@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Upload,
   Calendar,
@@ -14,39 +14,80 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
 
+// sidebar links with roles who can access them
 const sidebarLinks = [
   {
     label: "File Upload",
     icon: Upload,
     href: "/new-home",
     key: "file-upload",
+    roles: ["admin"],
   },
   {
     label: "Lecture Schedule",
     icon: Calendar,
     href: "/lecture-schedule",
     key: "lecture-schedule",
+    roles: ["user", "admin"],
   },
   {
     label: "Section Schedule",
     icon: Calendar,
     href: "/section-schedule",
     key: "section-schedule",
+    roles: ["user", "admin"],
   },
   {
     label: "Admin Management",
     icon: User2Icon,
     href: "/admin-management",
     key: "admin-management",
+    roles: ["admin"],
   },
 ];
 
 const Sidebar = ({ activeLink }) => {
   const pathname = usePathname();
+  const [userRoles, setUserRoles] = useState([]);
+
+  // get user roles from token
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          let roles = [];
+          if (decoded.role === "admin") {
+            roles = ["admin", "user"]; // admin can see everything user can
+          } else if (decoded.role === "user") {
+            roles = ["user"];
+          }
+          setUserRoles(roles);
+        } catch (e) {
+          setUserRoles([]);
+        }
+      } else {
+        setUserRoles([]);
+      }
+    }
+  }, []);
+
+  // filter links based on user roles
+  const filteredLinks = sidebarLinks.filter((link) =>
+    link.roles.some((role) => userRoles.includes(role))
+  );
 
   // Utility to check if link is active
   const isActive = (href) => pathname === href;
+
+  // logout function
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/new-login";
+  };
 
   return (
     <div className="w-64 bg-white border-r border-gray-200 h-screen flex flex-col">
@@ -66,7 +107,7 @@ const Sidebar = ({ activeLink }) => {
       <div className="flex-1 p-4">
         <div className="space-y-2">
           {/* File Upload - Active State */}
-          {sidebarLinks.map((link) => {
+          {filteredLinks.map((link) => {
             const Icon = link.icon;
             const active = isActive(link.href);
             return (
@@ -114,9 +155,12 @@ const Sidebar = ({ activeLink }) => {
           </div>
 
           {/* Logout */}
-          <div className="text-red-500 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-red-50 transition-colors">
+          <div
+            onClick={handleLogout}
+            className="text-red-500 rounded-lg p-3 flex items-center space-x-3 cursor-pointer hover:bg-red-50 transition-colors"
+          >
             <LogOut className="w-5 h-5" />
-            <span className="font-medium">Logout</span>
+            <button className="font-medium">Logout</button>
           </div>
         </div>
       </div>

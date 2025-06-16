@@ -3,6 +3,7 @@
 import React from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import Sidebar from "../../components/sidebar";
+import ProtectedRoute from "../../components/ProtectedRoute.jsx";
 
 const activeStatus = () => {
   return (
@@ -154,7 +155,13 @@ const UserModal = ({ setShowModal, onUserCreated, mode, user }) => {
             className="w-full bg-purple-600 text-white py-2 rounded-lg text-lg hover:bg-purple-700 transition-colors disabled:opacity-60"
             disabled={formLoading}
           >
-            {formLoading ? (mode === "create" ? "Creating..." : "Saving...") : (mode === "create" ? "Create User" : "Save Changes")}
+            {formLoading
+              ? mode === "create"
+                ? "Creating..."
+                : "Saving..."
+              : mode === "create"
+              ? "Create User"
+              : "Save Changes"}
           </button>
         </form>
       </div>
@@ -211,167 +218,171 @@ export default function AdminManagement() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Fixed Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-64 z-10">
-        <Sidebar />
-      </div>
+    <ProtectedRoute role={"admin"}>
+      <div className="min-h-screen bg-gray-50">
+        {/* Fixed Sidebar */}
+        <div className="fixed left-0 top-0 h-full w-64 z-10">
+          <Sidebar />
+        </div>
 
-      {/* Main Content Area */}
-      <div className="ml-64">
-        {/* Header */}
-        <div className="bg-white shadow-sm border-b">
-          <div className="px-4 sm:px-6 lg:px-8">
+        {/* Main Content Area */}
+        <div className="ml-64">
+          {/* Header */}
+          <div className="bg-white shadow-sm border-b">
+            <div className="px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-between items-center h-16">
+                <div className="flex items-center space-x-4">
+                  <span className="text-gray-900 font-medium">
+                    Admin Management
+                  </span>
+                  <span className="text-gray-400">Manage Users</span>
+                </div>
+                <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">Y</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center space-x-4">
-                <span className="text-gray-900 font-medium">
+                <span className="text-gray-900 text-2xl font-medium">
                   Admin Management
                 </span>
-                <span className="text-gray-400">Manage Users</span>
-              </div>
-              <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">Y</span>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-900 text-2xl font-medium">
-                Admin Management
-              </span>
-            </div>
-          </div>
-          <div className="border w-full h-full rounded-xl p-4 overflow-y-auto">
-            <div className="flex justify-between items-center">
-              <div className="flex flex-col space-y-2">
-                <h1 className="text-2xl font-medium">Admin Directory</h1>
-                <p className="text-gray-500">
-                  Manage your organization's admin users, roles, and access.
-                </p>
+            <div className="border w-full h-full rounded-xl p-4 overflow-y-auto">
+              <div className="flex justify-between items-center">
+                <div className="flex flex-col space-y-2">
+                  <h1 className="text-2xl font-medium">Admin Directory</h1>
+                  <p className="text-gray-500">
+                    Manage your organization's admin users, roles, and access.
+                  </p>
+                </div>
+                <div>
+                  <button
+                    onClick={openModal}
+                    className="bg-purple-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-purple-700 transition-colors"
+                  >
+                    <span className="flex items-center space-x-2 gap-2">
+                      <Plus /> Create New User
+                    </span>
+                  </button>
+                  {/* Overlay Modal for Create User */}
+                  {showModal && (
+                    <UserModal
+                      setShowModal={setShowModal}
+                      onUserCreated={fetchUsers}
+                      mode="create"
+                    />
+                  )}
+                  {editModal && (
+                    <UserModal
+                      setShowModal={closeEditModal}
+                      onUserCreated={fetchUsers}
+                      mode="edit"
+                      user={selectedUser}
+                    />
+                  )}
+                </div>
               </div>
-              <div>
-                <button
-                  onClick={openModal}
-                  className="bg-purple-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-purple-700 transition-colors"
-                >
-                  <span className="flex items-center space-x-2 gap-2">
-                    <Plus /> Create New User
-                  </span>
-                </button>
-                {/* Overlay Modal for Create User */}
-                {showModal && (
-                  <UserModal
-                    setShowModal={setShowModal}
-                    onUserCreated={fetchUsers}
-                    mode="create"
-                  />
-                )}
-                {editModal && (
-                  <UserModal
-                    setShowModal={closeEditModal}
-                    onUserCreated={fetchUsers}
-                    mode="edit"
-                    user={selectedUser}
-                  />
-                )}
-              </div>
-            </div>
-            <div className="mt-6">
-              <div className="overflow-x-auto mt-6">
-                <table className="min-w-full bg-white rounded-xl shadow-md ">
-                  <thead className="text-center">
-                    <tr className=" border-b">
-                      <th className="px-6 py-4 font-medium text-gray-500">
-                        Username
-                      </th>
-                      <th className="px-6 py-4 font-medium text-gray-500">
-                        Name
-                      </th>
-                      <th className="px-6 py-4 font-medium text-gray-500">
-                        Role
-                      </th>
-                      <th className="px-6 py-4 font-medium text-gray-500">
-                        Status
-                      </th>
-                      <th className="px-6 py-4 font-medium text-gray-500">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-700">
-                    {loading ? (
-                      <tr>
-                        <td
-                          colSpan={5}
-                          className="py-8 text-center text-gray-400"
-                        >
-                          Loading users...
-                        </td>
+              <div className="mt-6">
+                <div className="overflow-x-auto mt-6">
+                  <table className="min-w-full bg-white rounded-xl shadow-md ">
+                    <thead className="text-center">
+                      <tr className=" border-b">
+                        <th className="px-6 py-4 font-medium text-gray-500">
+                          Username
+                        </th>
+                        <th className="px-6 py-4 font-medium text-gray-500">
+                          Name
+                        </th>
+                        <th className="px-6 py-4 font-medium text-gray-500">
+                          Role
+                        </th>
+                        <th className="px-6 py-4 font-medium text-gray-500">
+                          Status
+                        </th>
+                        <th className="px-6 py-4 font-medium text-gray-500">
+                          Actions
+                        </th>
                       </tr>
-                    ) : error ? (
-                      <tr>
-                        <td
-                          colSpan={5}
-                          className="py-8 text-center text-red-500"
-                        >
-                          {error}
-                        </td>
-                      </tr>
-                    ) : users.length === 0 ? (
-                      <tr>
-                        <td
-                          colSpan={5}
-                          className="py-8 text-center text-gray-400"
-                        >
-                          No users found.
-                        </td>
-                      </tr>
-                    ) : (
-                      users.map((user) => (
-                        <tr
-                          key={user.username}
-                          className="hover:bg-purple-50 transition-colors border-b text-center"
-                        >
-                          <td className="px-6 py-4 font-mono">
-                            {user.username}
-                          </td>
-                          <td className="px-6 py-4">{user.name}</td>
-                          <td className="px-6 py-4">
-                            {user.role === "admin" ? adminRole() : userRole()}
-                          </td>
-                          <td className="px-6 py-4">{activeStatus()}</td>
-                          <td className="px-6 py-4">
-                            <div className="flex justify-center items-center gap-2">
-                              <button
-                                className="p-2 rounded-lg hover:bg-purple-100 text-purple-600 transition-colors"
-                                title="Edit"
-                                onClick={() => openEditModal(user)}
-                              >
-                                <Pencil className="w-5 h-5" />
-                              </button>
-                              <button
-                                className="p-2 rounded-lg hover:bg-red-100 text-red-600 transition-colors"
-                                title="Delete"
-                                onClick={() => handleUserDelete(user.username)}
-                              >
-                                <Trash2 className="w-5 h-5" />
-                              </button>
-                            </div>
+                    </thead>
+                    <tbody className="text-gray-700">
+                      {loading ? (
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className="py-8 text-center text-gray-400"
+                          >
+                            Loading users...
                           </td>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+                      ) : error ? (
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className="py-8 text-center text-red-500"
+                          >
+                            {error}
+                          </td>
+                        </tr>
+                      ) : users.length === 0 ? (
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className="py-8 text-center text-gray-400"
+                          >
+                            No users found.
+                          </td>
+                        </tr>
+                      ) : (
+                        users.map((user) => (
+                          <tr
+                            key={user.username}
+                            className="hover:bg-purple-50 transition-colors border-b text-center"
+                          >
+                            <td className="px-6 py-4 font-mono">
+                              {user.username}
+                            </td>
+                            <td className="px-6 py-4">{user.name}</td>
+                            <td className="px-6 py-4">
+                              {user.role === "admin" ? adminRole() : userRole()}
+                            </td>
+                            <td className="px-6 py-4">{activeStatus()}</td>
+                            <td className="px-6 py-4">
+                              <div className="flex justify-center items-center gap-2">
+                                <button
+                                  className="p-2 rounded-lg hover:bg-purple-100 text-purple-600 transition-colors"
+                                  title="Edit"
+                                  onClick={() => openEditModal(user)}
+                                >
+                                  <Pencil className="w-5 h-5" />
+                                </button>
+                                <button
+                                  className="p-2 rounded-lg hover:bg-red-100 text-red-600 transition-colors"
+                                  title="Delete"
+                                  onClick={() =>
+                                    handleUserDelete(user.username)
+                                  }
+                                >
+                                  <Trash2 className="w-5 h-5" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }

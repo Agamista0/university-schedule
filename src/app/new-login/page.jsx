@@ -1,16 +1,47 @@
-'use client';
-import React, { useState } from 'react';
-import { Calendar, Clock, FileText, GraduationCap } from 'lucide-react';
+"use client";
+import React, { useState } from "react";
+import { Calendar, Clock, FileText, GraduationCap } from "lucide-react";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('admin@lecturehub.com');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("admin@lecturehub.com");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login attempt:', { username, password });
+    setLoading(true);
+
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const token = data.token;
+      localStorage.setItem("token", token);
+
+      const role = data.role;
+
+      if (role === "admin") {
+        window.location.href = "/new-home";
+      } else {
+        window.location.href = "/lecture-schedule";
+      }
+    } else {
+      setError("Login failed, please try again with correct credentials");
+    }
+    setLoading(false);
   };
+
+  // Handle login failed in the UI
+  const [error, setError] = useState("");
+
+  // Handle loading state
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-white to-purple-50 flex items-center justify-center p-4">
@@ -44,14 +75,14 @@ export default function LoginPage() {
             {/* Username Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Username
+                ID
               </label>
               <input
                 type="email"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-gray-50"
-                placeholder="admin@lecturehub.com"
+                placeholder="Enter ID"
               />
             </div>
 
@@ -61,26 +92,34 @@ export default function LoginPage() {
                 Password
               </label>
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-gray-50"
-                placeholder="••••••••"
+                placeholder="Enter Password"
               />
             </div>
 
             {/* Login Button */}
             <button
               onClick={handleSubmit}
+              disabled={loading}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 outline-none"
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
+
+            {/* Error Message */}
+            {error && (
+              <div className="text-red-500 text-center text-sm mt-2">
+                {error}
+              </div>
+            )}
 
             {/* Forgot Password Link */}
             <div className="text-center">
               <button
-                onClick={() => console.log('Forgot password clicked')}
+                onClick={() => console.log("Forgot password clicked")}
                 className="text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer"
               >
                 Forgot password?
@@ -89,16 +128,16 @@ export default function LoginPage() {
 
             {/* Terms and Privacy */}
             <div className="text-center text-xs text-gray-500 leading-relaxed">
-              By logging in, you agree to our{' '}
+              By logging in, you agree to our{" "}
               <button
-                onClick={() => console.log('Terms clicked')}
+                onClick={() => console.log("Terms clicked")}
                 className="text-blue-500 hover:text-blue-600 transition-colors duration-200 bg-transparent border-none cursor-pointer underline"
               >
                 Terms of Service
-              </button>{' '}
-              and{' '}
+              </button>{" "}
+              and{" "}
               <button
-                onClick={() => console.log('Privacy clicked')}
+                onClick={() => console.log("Privacy clicked")}
                 className="text-blue-500 hover:text-blue-600 transition-colors duration-200 bg-transparent border-none cursor-pointer underline"
               >
                 Privacy Policy
